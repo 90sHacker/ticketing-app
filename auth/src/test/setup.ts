@@ -5,10 +5,10 @@ import { app } from '../app';
 //create a connection to mongoDB
 let mongo: any;
 beforeAll(async () => {
-  mongo = new MongoMemoryServer();
+  mongo = MongoMemoryServer.create();
   const mongoUri = mongo.getUri();
 
-  await mongoose.connect(mongoUri);
+  await mongoose.connect(mongoUri, {});
 });
 
 //delete all collections before each test
@@ -22,6 +22,8 @@ beforeEach(async () => {
 
 //stop mongo and close mongoose connection
 afterAll(async () => {
-  await mongo.stop();
+  if (mongo) {
+    await mongo.stop();
+  }
   await mongoose.connection.close();
-})
+});
