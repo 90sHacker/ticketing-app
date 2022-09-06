@@ -5,7 +5,9 @@ import { app } from '../app';
 //create a connection to mongoDB
 let mongo: any;
 beforeAll(async () => {
-  mongo = MongoMemoryServer.create();
+  process.env.JWT_KEY = 'asdf';
+
+  mongo = await MongoMemoryServer.create();
   const mongoUri = mongo.getUri();
 
   await mongoose.connect(mongoUri, {});
@@ -23,7 +25,7 @@ beforeEach(async () => {
 //stop mongo and close mongoose connection
 afterAll(async () => {
   if (mongo) {
-    await mongo.stop();
+    await mongo;
   }
   await mongoose.connection.close();
 });
