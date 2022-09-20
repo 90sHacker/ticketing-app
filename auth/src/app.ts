@@ -8,7 +8,7 @@ import { currentUserRouter } from './routes/current-user';
 import { signinRouter } from './routes/signin';
 import { signupRouter } from './routes/signup';
 import { signoutRouter } from './routes/signout';
-import { errorHandler } from './middleware/error-handler';
+import { errorHandler } from '@ticketszone/common';
 
 const app = express();
 app.set('trust proxy', true);
