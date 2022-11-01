@@ -7,6 +7,9 @@ declare global {
   var signin: () => string[]
 }
 
+//fake connection to NATS server
+jest.mock('../nats-wrapper');
+
 //create a connection to mongoDB
 let mongo: any;
 beforeAll(async () => {
@@ -21,6 +24,7 @@ beforeAll(async () => {
 
 //delete all collections before each test
 beforeEach(async () => {
+  jest.clearAllMocks();
   const collections = await mongoose.connection.db.collections();
 
   for(let collection of collections) {
