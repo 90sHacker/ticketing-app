@@ -4,10 +4,10 @@ import { json } from 'body-parser';
 
 import cookieSession from 'cookie-session';
 
-import { createTicketRouter } from './routes/new';
-import { showTicketRouter } from './routes/show';
-import { indexTicketRouter } from './routes';
-import { updateTicketRouter } from './routes/update';
+import { createOrderRouter } from './routes/new';
+import { showOrderRouter } from './routes/show';
+import { indexOrderRouter } from './routes';
+import { deleteOrderRouter } from './routes/delete';
 import { errorHandler, NotFoundError, currentUser } from '@ticketszone/common';
 
 const app = express();
@@ -19,10 +19,10 @@ app.use(cookieSession({
 }));
 
 app.use(currentUser);
-app.use(createTicketRouter);
-app.use(showTicketRouter);
-app.use(indexTicketRouter);
-app.use(updateTicketRouter);
+app.use(createOrderRouter);
+app.use(showOrderRouter);
+app.use(indexOrderRouter);
+app.use(deleteOrderRouter);
 
 app.all('*', async (req, res) => {
   console.log(req.url)
