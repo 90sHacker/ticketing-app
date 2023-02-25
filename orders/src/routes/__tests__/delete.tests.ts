@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../../app';
 import { Ticket } from '../../models/ticket';
@@ -7,7 +8,7 @@ import { natsWrapper } from '../../nats-wrapper';
 
 it('sets a specified order status to cancelled', async () => {
   const ticket = Ticket.build({
-    id: 'abc',
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: 'concert',
     price: 20
   });
@@ -28,13 +29,13 @@ it('sets a specified order status to cancelled', async () => {
     .expect(204)
 
   const cancelledOrder = await Order.findById(order.id)
-
+  console.log(cancelledOrder!.status)
   expect(cancelledOrder!.status).toEqual(OrderStatus.Cancelled)
 });
 
 it('emits a order cancelled event', async () => {
   const ticket = Ticket.build({
-    id: 'def',
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: 'concert',
     price: 20
   });

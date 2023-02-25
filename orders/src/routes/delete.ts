@@ -6,18 +6,19 @@ import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
-router.delete('/api/orders/orderId', requireAuth, async (req: Request, res: Response) => {
+router.delete('/api/orders/:orderId', requireAuth, async (req: Request, res: Response) => {
   const order = await Order.findById(req.params.orderId).populate('ticket')
 
   if(!order) {
-    return new NotFoundError()
+    throw new NotFoundError()
   };
 
   if(order.userId !== req.currentUser!.id) {
-    return new NotAuthorizedError()
+    throw new NotAuthorizedError()
   };
 
-  order.status = OrderStatus.Cancelled
+  order.status = OrderStatus.Cancelled;
+  await order.save();
 
   //emit a cancelled order event
   new OrderCancelledPublisher(natsWrapper.client).publish({
