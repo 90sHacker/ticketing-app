@@ -5,10 +5,12 @@ deploy:
     manifests:
       - "./infra/k8s/*"
 build:
-  local:
-    push: false
+  # local:
+  #   push: false
+  googleCloudBuild:
+    projectId: able-marking-376920
   artifacts:
-    - image: 90shacker/auth
+    - image: us.gcr.io/able-marking-376920/auth
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -16,7 +18,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: 90shacker/client
+    - image: us.gcr.io/able-marking-376920/client
       context: client
       docker:
         dockerfile: Dockerfile
@@ -24,7 +26,7 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
-    - image: 90shacker/tickets
+    - image: us.gcr.io/able-marking-376920/tickets
       context: tickets
       docker:
         dockerfile: Dockerfile
@@ -32,7 +34,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: 90shacker/orders
+    - image: us.gcr.io/able-marking-376920/orders
       context: orders
       docker:
         dockerfile: Dockerfile

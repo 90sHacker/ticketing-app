@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: orders
-          image: 90shacker/orders
+          image: us.gcr.io/able-marking-376920/orders
           env:
             - name: NATS_CLIENT_ID
               valueFrom:

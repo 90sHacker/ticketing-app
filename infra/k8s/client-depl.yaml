@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: 90shacker/client
+          image: us.gcr.io/able-marking-376920/client
 ---
 apiVersion: v1
 kind: Service

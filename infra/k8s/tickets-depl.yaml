@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: tickets
-          image: 90shacker/tickets
+          image: us.gcr.io/able-marking-376920/tickets
           env:
             - name: NATS_CLIENT_ID
               valueFrom:
