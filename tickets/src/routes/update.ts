@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 
-import { validateRequest, requireAuth, NotFoundError, NotAuthorizedError  } from '@ticketszone/common';
+import { validateRequest, requireAuth, NotFoundError, NotAuthorizedError, BadRequestError  } from '@ticketszone/common';
 import { Ticket } from '../models/ticket';
 
 import { TicketUpdatedPublisher } from '../events/publishers/ticket-updated-publisher';
@@ -25,6 +25,10 @@ router.put('/api/tickets/:id', requireAuth, [
 
   if(ticket.userId !== req.currentUser!.id) {
     throw new NotAuthorizedError();
+  }
+
+  if (ticket.orderId) {
+    throw new BadRequestError('Cannot update a reserved ticket');
   }
 
   ticket.set({
